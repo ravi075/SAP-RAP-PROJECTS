@@ -1,0 +1,34 @@
+{
+  "formatVersion": "2",
+  "header": {
+    "description": "BOOKS MANAGEMENT",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD",
+    "targetMappingTitle": "BOOKS MANAGEMENT"
+  },
+  "ui5AppDetails": {
+    "appId": "sales"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_1CC6A2438A4D004C6A2B26BF93F3E44E760FAF25_TM",
+    "semanticObject": "BOOKS",
+    "action": "MANAGE",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_1CC6A2438A4D004C6A2B26BF93F3E44E760FAF25_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "BOOKS MANAGEMENT"
+      }
+    }
+  ]
+}

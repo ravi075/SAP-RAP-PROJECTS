@@ -1,0 +1,70 @@
+managed implementation in class zbp_i_machine_hdr1 unique;
+strict ( 2 );
+with draft;
+extensible;
+define behavior for ZI_MACHINE_HDR1 //alias <alias_name>
+persistent table zmachine_hdr1
+extensible
+draft table zmachine_hdr1_D
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master ( global)
+//etag master LocalLastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+ static action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL;
+
+  field ( mandatory : create ) MachineNo;
+  field (readonly)LastChangedAt, LocalLastChangedBy;
+  mapping for ZMACHINE_HDR1 corresponding extensible
+// mapping for ZMACHINE_HDR1
+  {
+    MachineNo         = machine_no;
+    zcheck            = zcheck;
+    LocalCreatedBy    = LOCAL_CREATED_BY;
+    LocalCreatedAt    = LOCAL_CREATED_AT;
+    LocalLastChangedBy= LOCAL_LAST_CHANGED_BY;
+    LocalLastChangedAt= LOCAL_LAST_CHANGED_AT;
+    LastChangedAt     = LAST_CHANGED_AT;
+  }
+  association _Item { create; with draft; }
+
+}
+
+define behavior for ZI_MACHINE_ITM1 //alias <alias_name>
+persistent table zmachine_itm1
+//extensible
+draft table zmachine_itm1_d
+lock dependent by _Header
+//authorization master ( global )
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) MachineNo;
+  field (mandatory) SerialNo, Description;
+  association _Header { with draft;}
+
+   mapping for ZMACHINE_ITM1
+  {
+    MachineNo          = MACHINE_NO;
+    SerialNo           = SERIAL_NO;
+    zcheck             = zcheck;
+    Description        = DESCRIPTION;
+    LocalCreatedBy     = LOCAL_CREATED_BY;
+    LocalCreatedAt     = LOCAL_CREATED_AT;
+    LocalLastChangedBy = LOCAL_LAST_CHANGED_BY;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    LastChangedAt      = LAST_CHANGED_AT;
+  }
+}

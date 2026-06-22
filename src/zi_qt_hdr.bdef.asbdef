@@ -1,0 +1,29 @@
+managed implementation in class zbp_i_qt_hdr unique;
+strict ( 2 );
+
+define behavior for ZI_QT_HDR //alias <alias_name>
+persistent table ztqt_hdr
+lock master
+authorization master ( instance )
+//etag master <field_name>
+etag master last_changed_at
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) uuid;
+  association _Item { create; }
+}
+
+define behavior for ZI_QT_ITEM //alias <alias_name>
+persistent table ztqt_item
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  //field ( readonly ) uuid;
+   field ( readonly ) parent_uuid;
+  association _Header;
+}

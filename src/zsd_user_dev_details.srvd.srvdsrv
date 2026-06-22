@@ -1,0 +1,5 @@
+@EndUserText.label: 'user development details'
+define service ZSD_USER_DEV_DETAILS {
+  expose ZC_USER     as User;
+  expose ZC_USER_DEV as UserDev;
+}

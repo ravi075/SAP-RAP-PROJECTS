@@ -1,0 +1,51 @@
+managed implementation in class zbp_i_machine_hdr unique;
+strict ( 2 );
+
+define behavior for ZI_MACHINE_HDR //alias <alias_name>
+persistent table zmachine_hdr
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field (readonly : update, mandatory : create ) MachineNo;
+
+   mapping for ZMACHINE_HDR
+  {
+    MachineNo         = machine_no;
+    zcheck            = zcheck;
+    LocalCreatedBy    = LOCAL_CREATED_BY;
+    LocalCreatedAt    = LOCAL_CREATED_AT;
+    LocalLastChangedBy= LOCAL_LAST_CHANGED_BY;
+    LocalLastChangedAt= LOCAL_LAST_CHANGED_AT;
+    LastChangedAt     = LAST_CHANGED_AT;
+  }
+  association _Item { create; }
+}
+
+define behavior for ZI_MACHINE_ITM //alias <alias_name>
+persistent table zmachine_itm
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly) MachineNo;
+  field ( mandatory : create ) SerialNo;
+  association _Header;
+  mapping for ZMACHINE_ITM
+  {
+    MachineNo          = MACHINE_NO;
+    SerialNo           = SERIAL_NO;
+    zcheck             = zcheck;
+    Description        = DESCRIPTION;
+    LocalCreatedBy     = LOCAL_CREATED_BY;
+    LocalCreatedAt     = LOCAL_CREATED_AT;
+    LocalLastChangedBy = LOCAL_LAST_CHANGED_BY;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    LastChangedAt      = LAST_CHANGED_AT;
+  }
+}

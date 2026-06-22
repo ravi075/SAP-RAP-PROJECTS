@@ -1,0 +1,14 @@
+managed implementation in class zbp_test_so unique;
+strict ( 2 );
+
+define behavior for ZTEST_SO //alias <alias_name>
+persistent table ztqt_hdr
+lock master
+authorization master ( instance )
+//etag master last_changed_at
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) SalesQuotation;
+}

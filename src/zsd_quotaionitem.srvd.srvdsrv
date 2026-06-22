@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service defination'
+define service ZSD_QUOTAIONITEM {
+  expose ZC_SQ_ITEM;
+}

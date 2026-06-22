@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition'
+define service Zsd_quotation {
+  expose ZI_SQ_HDR;
+  expose ZI_SQ_ITEM;
+}

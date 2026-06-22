@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition'
+define service ZSD_MACHINE1 {
+  expose ZC_MACHINE_HDR1;
+  expose ZC_MACHINE_ITM1;
+}

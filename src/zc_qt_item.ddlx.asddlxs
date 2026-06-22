@@ -1,0 +1,29 @@
+//@Metadata.layer: layer
+//annotate entity entity_name
+//    with 
+//{
+//    element_name;
+    
+//}
+@Metadata.layer: #CORE
+
+annotate entity ZC_QT_ITEM with
+{
+  @UI.hidden: true
+  uuid;
+
+  @UI.hidden: true
+  parent_uuid;
+
+  @UI.lineItem: [{ position: 10 }]
+  sales_quotation_item;
+
+  @UI.lineItem: [{ position: 20 }]
+  division;
+
+  @UI.lineItem: [{ position: 30 }]
+  material;
+
+  @UI.lineItem: [{ position: 40 }]
+  material_text;
+}

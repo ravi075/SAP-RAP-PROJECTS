@@ -1,0 +1,6 @@
+@EndUserText.label: 'Quotation Service'
+define service ZUI_QT_SERVICE {
+  expose ZC_QT_HDR  as Header;
+  expose ZC_QT_ITEM as Item;
+  expose ZTEST_SO;
+}

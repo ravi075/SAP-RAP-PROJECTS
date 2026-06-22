@@ -1,0 +1,98 @@
+managed implementation in class zbp_i_user unique;
+strict ( 2 );
+define behavior for ZI_USER alias User
+persistent table zuser
+lock master
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly : update ) EmpId, DevId;
+  field ( readonly ) LocalCreatedBy, LocalLastChangedAt;
+  field ( mandatory : create ) EmpId, DevId, DevDescription;
+  association _UserDev { create ( features : instance ); }
+  // Logic to read excel data into associated entity ZI_2123_User_Dev
+  action ( features : instance ) uploadExcelData result [1] $self;
+   action ( features : instance ) DownloadExcel result [1] $self;
+  // Change File Status During Creation of new record
+  determination FillFileStatus on modify { field EmpId, DevId; }
+  // Change File Status When file is selected
+  determination FillSelectedStatus on modify { field Attachment; }
+  // for reloading ui after data has been uploaded
+  side effects
+  {
+    field Attachment affects field FileStatus  ;
+    action uploadExcelData affects $self, field _UserDev.*;
+  }
+
+mapping for zuser
+    {
+      EmpId              = emp_id;
+      DevId              = dev_id;
+      DevDescription     = dev_description;
+      Filename           = filename;
+      Attachment         = attachment;
+      Mimetype           = mimetype;
+      FileStatus         = file_status;
+      TemplateStatus     = template_status;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LastCangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
+    }
+}
+
+define behavior for ZI_USER_DEV alias UserDev
+persistent table zuser_dev
+lock dependent by _User
+authorization dependent by _User
+//etag master
+{
+  update;
+  delete;
+  field ( readonly ) EmpId, DevId, SerialNo;
+  //field ( readonly : update ) ObjectType , ObjectName ;
+  //field ( mandatory : create ) ObjectName, ObjectType;
+  association _User;
+  mapping for zuser_dev
+    {
+      EmpId      = epm_id;
+      DevId      = dev_id;
+      SerialNo   = serial_no;
+      ObjectType = object_type;
+      ObjectName = object_name;
+    }
+}
+
+
+
+//managed implementation in class zbp_i_user unique;
+//strict ( 2 );
+//
+//define behavior for ZI_USER //alias <alias_name>
+//persistent table zuser
+//lock master
+//authorization master ( instance )
+////etag master <field_name>
+//{
+//  create ( authorization : global );
+//  update;
+//  delete;
+//  field ( readonly ) EmpId, DevId;
+//  association _UserDev { create; }
+//}
+//
+//define behavior for ZI_USER_DEV //alias <alias_name>
+//persistent table zuser_dev
+//lock dependent by _User
+//authorization dependent by _User
+////etag master <field_name>
+//{
+//  update;
+//  delete;
+//  field ( readonly ) EmpId, DevId, SerialNo;
+//  association _User;
+//}
